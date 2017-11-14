@@ -27,8 +27,8 @@ export const login = auth => dispatch => {
         );
 };
 
-export const signUp = auth => dispatch => {
-    return authAPIUtil.signUp(auth)
+export const signUp = user => dispatch => {
+    return authAPIUtil.signUp(user)
         .then(reponse => {
                 // console.log(localStorage);
                 // dispatch(receiveCurrentUser(auth.email));
