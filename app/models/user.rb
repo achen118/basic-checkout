@@ -6,4 +6,11 @@ class User < ApplicationRecord
 
     has_many :subscriptions
     has_many :membership_plans, through: :subscriptions
+
+    def to_token_payload
+        {
+            id: self.id,
+            email: self.email
+        }
+    end
 end
