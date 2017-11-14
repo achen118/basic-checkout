@@ -17,6 +17,6 @@ class MembershipPlansController < ApplicationController
     private
 
     def membership_plan_params
-        params.require(:membership_plan).permit(:level, :description, :cost, :num_free_guests)
+        params.require(:membership_plan).permit(:level, :description, :cost, :max_guests, :guest_cost)
     end
 end
