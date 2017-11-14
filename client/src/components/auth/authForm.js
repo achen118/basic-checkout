@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class AuthForm extends Component {
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -9,9 +14,8 @@ export default class AuthForm extends Component {
         };
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.formAction = this.props.location.pathname === "/signup" ? "Sign Up" : "Login";
     }
-
+    
     handleUpdate(key) {
         return event => {
             this.setState({
@@ -19,7 +23,7 @@ export default class AuthForm extends Component {
             });
         };
     }
-
+    
     handleSubmit(event) {
         event.preventDefault();
         if (this.props.location.pathname === "/signup") {
@@ -28,31 +32,34 @@ export default class AuthForm extends Component {
             this.props.login(this.state);
         }
     }
-
+    
     render() {
         const { pathname } = this.props.location;
-        const { email, password } = this.state;
+        const formAction = pathname === "/signup" ? "Sign Up" : "Login";
         return (
             <div>
                 <header>
-                    <h1>{ this.formAction }</h1>
+                    <h1>{ formAction }</h1>
                 </header>
                 <form onSubmit={ this.handleSubmit }>
                     <input
-                        value={ email }
+                        value={ this.state.email }
                         onChange={ this.handleUpdate('email') }
                         placeholder="Email address"
                         type="email" />
 
                     <input
-                        value={ password }
+                        value={ this.state.password }
                         onChange={ this.handleUpdate('password') }
                         placeholder="Password"
                         type="password" />
                     <input 
-                        value={ this.formAction }
+                        value={ formAction }
                         type="submit" />
                 </form>
+                <Link to={ pathname === "/signup" ? "/login" : "/signup" }>
+                    { pathname === "/signup" ? "Login" : "Sign Up" }
+                </Link>
             </div>
         );
     }

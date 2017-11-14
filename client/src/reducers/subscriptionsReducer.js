@@ -1,5 +1,6 @@
-import { RECEIVE_ALL_SUBSCRIPTIONS, RECEIVE_SUBSCRIPTION } from '../actions/subscriptionsActions';
 import merge from 'lodash/merge';
+import { RECEIVE_ALL_SUBSCRIPTIONS, RECEIVE_SUBSCRIPTION } from '../actions/subscriptionsActions';
+import { CLEAR_STORE } from '../actions/authActions';
 
 const SubscriptionsReducer = (state = [], action) => {
     Object.freeze(state);
@@ -8,6 +9,8 @@ const SubscriptionsReducer = (state = [], action) => {
             return action.subscriptions;
         case RECEIVE_SUBSCRIPTION:
             return;
+        case CLEAR_STORE:
+            return [];
         default:
             return state;
     }

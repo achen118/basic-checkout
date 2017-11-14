@@ -4,7 +4,8 @@ const AuthReducer = (state = null, action) => {
     Object.freeze(state);
     switch (action.type) {
         case RECEIVE_CURRENT_USER:
-            return action.email;
+            console.log(action.user);
+            return action.user;
         case CLEAR_STORE:
             return null;
         default:
