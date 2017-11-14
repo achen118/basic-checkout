@@ -1,4 +1,4 @@
-import { RECEIVE_ERRORS, CLEAR_ERRORS } from '../actions/error_actions';
+import { RECEIVE_ERRORS, CLEAR_ERRORS } from '../actions/errorsActions';
 
 const ErrorsReducer = (state = [], action) => {
     Object.freeze(state);
