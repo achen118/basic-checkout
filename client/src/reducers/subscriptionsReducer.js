@@ -21,7 +21,12 @@ const SubscriptionsReducer = (state = defaultState, action) => {
             });
             return nextState;
         case RECEIVE_SUBSCRIPTION:
-            return;
+            nextState = merge({}, state);
+            if (!nextState.allMembershipPlanIds.includes(action.subscription.membership_plan_id)) {
+                nextState.allMembershipPlanIds.push(action.subscription.membership_plan_id);
+            }
+            nextState.byMembershipPlanId[action.subscription.membership_plan_id] = action.subscription;
+            return nextState;
         case CLEAR_STORE:
             return [];
         default:

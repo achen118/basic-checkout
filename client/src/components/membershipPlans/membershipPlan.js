@@ -22,7 +22,7 @@ export default class MembershipPlans extends Component {
     }
 
     render() {
-        const { membershipPlan } = this.props;
+        const { membershipPlan, isSubscribed } = this.props;
         return (
             <ul 
                 className="membership-plan-ul">
@@ -38,16 +38,25 @@ export default class MembershipPlans extends Component {
                     className="membership-plan-cost">
                     { membershipPlan.cost }
                 </li>
-                <label> # of Guests
-                    <input
-                        value={ this.state.guests }
-                        onChange={ this.handleUpdate }
-                        id={membershipPlan.level} />
-                </label>
-                <button
-                    onClick={ this.handleSubscribe }>
-                    Subscribe Now
-                </button>
+                <section 
+                    className={ isSubscribed ? "unsubscribed hidden" : "unsubscribed" }>
+                    <label> # of Guests
+                        <input
+                            value={ this.state.guests }
+                            onChange={ this.handleUpdate }
+                            id={membershipPlan.level} />
+                    </label>
+                    <button
+                        onClick={ this.handleSubscribe }>
+                        Subscribe Now
+                    </button>
+                </section>
+                <section 
+                    className={ isSubscribed ? "subscribed" : "subscribed hidden" }>
+                    <button>
+                        Subscribed
+                    </button>
+                </section>
             </ul>
         );
     }
