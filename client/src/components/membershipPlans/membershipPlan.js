@@ -9,6 +9,7 @@ export default class MembershipPlans extends Component {
         };
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleSubscribe = this.handleSubscribe.bind(this);
+        this.renderErrors = this.renderErrors.bind(this);
     }
 
     handleUpdate(event) {
@@ -18,11 +19,28 @@ export default class MembershipPlans extends Component {
     }
 
     handleSubscribe(event) {
-        this.props.history.push(`/checkout/${event.target.id}/${this.state.guests}`);
+        const { membershipPlan } = this.props;
+        if (membershipPlan.level !== "Basic" && 
+            this.state.guests > 5) {
+            this.props.receiveErrors([{ [membershipPlan.id]: "5 guests maximum" }]);
+        } else {
+            this.props.clearErrors();
+            this.props.history.push(`/checkout/${event.target.id}/${this.state.guests}`);
+        }
+    }
+
+    renderErrors(event) {
+        const errors = [];
+        this.props.errors.forEach(error => {
+            const membershipPlanId = parseInt(Object.keys(error)[0]);
+            if (membershipPlanId === this.props.membershipPlan.id) {
+                errors.push(error[membershipPlanId]);
+            }
+        });
+        return errors;
     }
 
     render() {
-        console.log(this.props);
         const { membershipPlan, subscription } = this.props;
         let subscriptionCost;
         let subscriptionGuests;
@@ -67,6 +85,17 @@ export default class MembershipPlans extends Component {
                         <p>{`$${subscriptionCost} / month`}</p>
                         <p>{`${subscriptionGuests} guests`}</p>
                     </section>
+                    <ul>
+                        { 
+                            this.renderErrors().map((error, idx) => (
+                                <li
+                                    className="subscription-error"
+                                    key={ idx }>
+                                    { error }
+                                </li>
+                            )) 
+                        }
+                    </ul>
                 </ul>
         );
     }

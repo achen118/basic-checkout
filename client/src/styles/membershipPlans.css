@@ -7,6 +7,7 @@
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
+    position: relative;
 }
 
 .membership-plan-li {
@@ -67,4 +68,11 @@
     text-transform: uppercase;
     text-decoration: underline;
     letter-spacing: 2px;
+}
+
+.subscription-error {
+    position: absolute;
+    bottom: 6%;
+    right: 22%;
+    color: #F65600;
 }

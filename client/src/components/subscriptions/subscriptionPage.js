@@ -28,8 +28,11 @@ export default class SubscriptionPage extends Component {
                     My Subscription Page
                 </h2>
                 {
-                    membershipPlans.map((membershipPlan, idx) => (
-                        <MembershipPlanContainer membershipPlan={ membershipPlan } subscription={ this.getSubscription(membershipPlan.id) } key={ idx } />
+                    membershipPlans.allIds.map((membershipPlanId, idx) => (
+                        <MembershipPlanContainer 
+                            membershipPlan={ membershipPlans.byId[membershipPlanId] } 
+                            subscription={ this.getSubscription(membershipPlanId) } 
+                            key={ idx } />
                     ))
                 }
             </div>

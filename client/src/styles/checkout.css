@@ -4,3 +4,9 @@
     padding: 160px 150px 60px 150px;
     box-sizing: border-box;
 }
+
+.checkout-page-title {
+    font-weight: 700;
+    font-size: 56px;
+    letter-spacing: 10px;
+}

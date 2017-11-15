@@ -26,3 +26,12 @@ export const fetchAllSubscriptions = () => dispatch => {
             }, errors => dispatch(receiveErrors(errors.response.data))
         );
 };
+
+export const addSubscription = subscription => dispatch => {
+    return subscriptionsAPIUtil.addSubscription(subscription)
+        .then(response => {
+            dispatch(receiveSubscription(response.data));
+            dispatch(clearErrors());
+            }, errors => dispatch(receiveErrors(errors.response.data))
+        );
+};

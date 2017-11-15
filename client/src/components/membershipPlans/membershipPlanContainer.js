@@ -1,16 +1,18 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import MembershipPlan from './membershipPlan';
+import { receiveErrors, clearErrors } from '../../actions/errorsActions';
 
 const mapStateToProps = state => {
     return {
-
+        errors: state.errors
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        receiveErrors: errors => dispatch(receiveErrors(errors)),
+        clearErrors: () => dispatch(clearErrors())
     };
 };
 

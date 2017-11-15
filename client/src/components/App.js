@@ -5,7 +5,6 @@ import AuthFormContainer from './auth/authFormContainer';
 import HeaderContainer from './header/headerContainer';
 import SubscriptionPageContainer from './subscriptions/subscriptionPageContainer';
 import CheckoutPageContainer from './checkout/checkoutPageContainer';
-
 import '../styles/App.css';
 
 export default class App extends Component {
