@@ -7,7 +7,7 @@ export default class SubscriptionPage extends Component {
         this.props.fetchAllMembershipPlans();
         this.props.fetchAllSubscriptions();
     }
-
+    
     constructor(props) {
         super(props);
         this.getSubscription = this.getSubscription.bind(this);

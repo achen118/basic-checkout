@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import CheckoutPage from './checkoutPage';
 import { addSubscription } from '../../actions/subscriptionsActions';
+import { fetchAllMembershipPlans } from '../../actions/membershipPlansActions';
 
 const mapStateToProps = state => {
     return {
@@ -11,7 +12,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addSubscription: subscription => dispatch(addSubscription(subscription))
+        addSubscription: subscription => dispatch(addSubscription(subscription)),
+        fetchAllMembershipPlans: () => dispatch(fetchAllMembershipPlans())
     };
 };
 
