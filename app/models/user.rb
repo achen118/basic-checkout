@@ -13,4 +13,8 @@ class User < ApplicationRecord
             email: self.email
         }
     end
+
+    def self.from_token_payload payload
+        self.find payload["id"]
+  end
 end

@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import '../../styles/auth.css';
 
 export default class AuthForm extends Component {
+    componentDidMount() {
+        document.getElementById('email-input').focus();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.location.pathname !== this.props.location.pathname) {
+            this.props.clearErrors();
+        }
+    }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -9,9 +21,8 @@ export default class AuthForm extends Component {
         };
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.formAction = this.props.location.pathname === "/signup" ? "Sign Up" : "Login";
     }
-
+    
     handleUpdate(key) {
         return event => {
             this.setState({
@@ -19,7 +30,7 @@ export default class AuthForm extends Component {
             });
         };
     }
-
+    
     handleSubmit(event) {
         event.preventDefault();
         if (this.props.location.pathname === "/signup") {
@@ -28,29 +39,56 @@ export default class AuthForm extends Component {
             this.props.login(this.state);
         }
     }
-
+    
     render() {
+        const { errors } = this.props;
         const { pathname } = this.props.location;
-        const { email, password } = this.state;
+        const formAction = pathname === "/signup" ? "Sign Up" : "Login";
         return (
-            <div>
-                <header>
-                    <h1>{ this.formAction }</h1>
-                </header>
-                <form onSubmit={ this.handleSubmit }>
+            <div className="auth-container">
+                <section className="auth-form-header">
+                    <h3
+                        className="auth-form-title">
+                        { formAction }
+                    </h3>
+                    <p className="switch-form-text">
+                        {
+                            pathname === "/signup" ? "Already a member?" : "Not a member?"
+                        }
+                    </p>
+                    <Link
+                        className="switch-form-link"
+                        to={ pathname === "/signup" ? "/login" : "/signup" }>
+                        { pathname === "/signup" ? "Login" : "Sign Up" }
+                    </Link>
+                </section>
+                <form 
+                    className="auth-form"
+                    onSubmit={ this.handleSubmit }>
                     <input
-                        value={ email }
+                        id="email-input"
+                        value={ this.state.email }
                         onChange={ this.handleUpdate('email') }
                         placeholder="Email address"
                         type="email" />
 
                     <input
-                        value={ password }
+                        value={ this.state.password }
                         onChange={ this.handleUpdate('password') }
                         placeholder="Password"
                         type="password" />
+                    {
+                        errors.map((error, idx) => (
+                            <li 
+                                className="auth-error"
+                                key={ idx }>
+                                { error }
+                            </li>
+                        ))
+                    }
                     <input 
-                        value={ this.formAction }
+                        className="submit-button"
+                        value={ formAction }
                         type="submit" />
                 </form>
             </div>

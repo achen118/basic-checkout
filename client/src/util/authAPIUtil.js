@@ -8,10 +8,10 @@ export const login = auth => {
     });
 };
 
-export const signUp = auth => {
+export const signUp = user => {
     return axios({
         method: 'POST',
         url: '/api/users',
-        data: { auth }
+        data: { user }
     });
 };
