@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
-import MembershipPlan from '../membershipPlans/membershipPlan';
+import MembershipPlanContainer from '../membershipPlans/membershipPlanContainer';
 import '../../styles/subscriptions.css';
 
 export default class SubscriptionPage extends Component {
     componentDidMount() {
         this.props.fetchAllMembershipPlans();
+        this.props.fetchAllSubscriptions();
     }
 
     constructor(props) {
         super(props);
-        this.state = {
-        };
+        this.getSubscription = this.getSubscription.bind(this);
+    }
+
+    getSubscription(membershipPlanId) {
+        const { subscriptions } = this.props;
+        if (subscriptions.allMembershipPlanIds && subscriptions.allMembershipPlanIds.includes(membershipPlanId)) {
+            return subscriptions.byMembershipPlanId[membershipPlanId];
+        }
     }
 
     render() {
@@ -22,17 +29,7 @@ export default class SubscriptionPage extends Component {
                 </h2>
                 {
                     membershipPlans.map((membershipPlan, idx) => (
-                        <section>
-                            <MembershipPlan membershipPlan={ membershipPlan } key={ idx } />
-                            <label> # of Guests 
-                                <input
-                                    defaultValue="0"
-                                    id={ membershipPlan.level } />
-                            </label>
-                            <button>
-                                Subscribe Now
-                            </button>
-                        </section>
+                        <MembershipPlanContainer membershipPlan={ membershipPlan } subscription={ this.getSubscription(membershipPlan.id) } key={ idx } />
                     ))
                 }
             </div>

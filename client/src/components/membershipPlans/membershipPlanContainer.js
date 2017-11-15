@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
-import CheckoutPage from './checkoutPage';
+import { withRouter } from 'react-router-dom';
+import MembershipPlan from './membershipPlan';
 
 const mapStateToProps = state => {
     return {
-        membershipPlans: state.membershipPlans
+
     };
 };
 
@@ -13,7 +14,7 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-)(CheckoutPage);
+)(MembershipPlan));
