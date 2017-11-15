@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import AuthForm from './authForm';
 import { login, signUp } from '../../actions/authActions';
+import { clearErrors } from '../../actions/errorsActions';
 
 const mapStateToProps = state => {
     return {
@@ -11,7 +12,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         login: auth => dispatch(login(auth)),
-        signUp: auth => dispatch(signUp(auth))
+        signUp: auth => dispatch(signUp(auth)),
+        clearErrors: () => dispatch(clearErrors())
     };
 };
 
