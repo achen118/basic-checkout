@@ -12,7 +12,7 @@ class Api::MembershipPlansController < ApplicationController
 
     def index
         @membership_plans = MembershipPlan.all
-        render json: @membership_plans.as_json
+        render json: @membership_plans.as_json(except: [:created_at, :updated_at])
     end
 
     private

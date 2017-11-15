@@ -13,7 +13,9 @@ class Api::SubscriptionsController < ApplicationController
 
     def index
         @subscriptions = current_user.subscriptions
-        render json: @subscriptions.as_json
+        render json: @subscriptions.as_json(except: [:created_at, :updated_at])
+    end
+    
     private
 
     def subscription_params

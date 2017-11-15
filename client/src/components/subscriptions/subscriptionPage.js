@@ -5,16 +5,16 @@ import '../../styles/subscriptions.css';
 export default class SubscriptionPage extends Component {
     componentDidMount() {
         this.props.fetchAllMembershipPlans();
+        this.props.fetchAllSubscriptions();
     }
 
     constructor(props) {
         super(props);
-        this.state = {
-        };
     }
 
     render() {
         const { membershipPlans } = this.props;
+        console.log(this.props);
         return (
             <div className="subscription-page-container">
                 <h2 className="subscription-page-title">
@@ -22,17 +22,7 @@ export default class SubscriptionPage extends Component {
                 </h2>
                 {
                     membershipPlans.map((membershipPlan, idx) => (
-                        <section>
-                            <MembershipPlan membershipPlan={ membershipPlan } key={ idx } />
-                            <label> # of Guests 
-                                <input
-                                    defaultValue="0"
-                                    id={ membershipPlan.level } />
-                            </label>
-                            <button>
-                                Subscribe Now
-                            </button>
-                        </section>
+                        <MembershipPlan membershipPlan={ membershipPlan } key={ idx } />
                     ))
                 }
             </div>
