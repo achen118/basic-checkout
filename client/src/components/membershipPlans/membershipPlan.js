@@ -22,42 +22,50 @@ export default class MembershipPlans extends Component {
     }
 
     render() {
-        const { membershipPlan, isSubscribed } = this.props;
+        const { membershipPlan, subscription } = this.props;
+        let subscriptionCost;
+        let subscriptionGuests;
+        if (subscription) {
+            subscriptionCost = subscription.cost;
+            subscriptionGuests = subscription.guests;
+        }
         return (
-            <ul 
-                className="membership-plan-ul">
-                <li
-                    className="membership-plan-level">
-                    { membershipPlan.level }
-                </li>
-                <li
-                    className="membership-plan-description">
-                    { membershipPlan.description }
-                </li>
-                <li
-                    className="membership-plan-cost">
-                    { membershipPlan.cost }
-                </li>
-                <section 
-                    className={ isSubscribed ? "unsubscribed hidden" : "unsubscribed" }>
-                    <label> # of Guests
+                <ul 
+                    className="membership-plan-ul">
+                    <section className="membership-plan-li">
+                        <li
+                            className="membership-plan-level">
+                            { membershipPlan.level }
+                        </li>
+                        <li
+                            className="membership-plan-cost">
+                            { `$${membershipPlan.cost} / month` }
+                        </li>
+                        <li
+                            className="membership-plan-description">
+                            { membershipPlan.description }
+                        </li>
+                    </section>
+                    <section 
+                        className={ subscription ? "unsubscribed hidden" : "unsubscribed" }>
+                        <p>Number of Guests:</p>
                         <input
                             value={ this.state.guests }
                             onChange={ this.handleUpdate }
                             id={membershipPlan.level} />
-                    </label>
-                    <button
-                        onClick={ this.handleSubscribe }>
-                        Subscribe Now
-                    </button>
-                </section>
-                <section 
-                    className={ isSubscribed ? "subscribed" : "subscribed hidden" }>
-                    <button>
-                        Subscribed
-                    </button>
-                </section>
-            </ul>
+                        <button
+                            className="subscribe-button"
+                            onClick={ this.handleSubscribe }>
+                            Subscribe Now
+                        </button>
+                    </section>
+                    <section 
+                        className={ subscription ? "subscribed" : "subscribed hidden" }>
+                        <p>Subscribed</p>
+                        <p>{`$${subscriptionCost} / month`}</p>
+                        <p>{`${subscriptionGuests} guests`}</p>
+                    </section>
+                </ul>
         );
     }
 }

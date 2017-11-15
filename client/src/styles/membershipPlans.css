@@ -1,0 +1,70 @@
+.membership-plan-ul {
+    margin-top: 60px;
+    border: 30px solid #19334A;
+    border-right: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.membership-plan-li {
+    width: 80%;
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: left;
+}
+
+.membership-plan-li li {
+    padding-bottom: 10px;
+    font-weight: 700;
+}
+
+.membership-plan-level {
+    color: #10B3C7;
+    letter-spacing: 2px;
+    font-size: 28px;
+}
+
+.membership-plan-cost {
+    color: #F65600;
+    font-size: 20px;
+}
+
+.subscribed, .unsubscribed {
+    background-color: #19334A;
+    color: #FEFEFE;
+    width: 20%;
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    align-self: stretch;
+}
+
+.unsubscribed input {
+    background-color: transparent;
+    color: #FEFEFE;
+    border-bottom: 1px solid #FEFEFE;
+    text-align: center;
+    padding: 5px;
+    letter-spacing: 2px;
+    width: 10%;
+}
+
+.subscribe-button {
+    background-color: transparent;
+    color: #F65600;
+    text-transform: uppercase;
+    text-decoration: underline;
+    letter-spacing: 2px;
+}

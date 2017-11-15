@@ -10,15 +10,13 @@ export default class SubscriptionPage extends Component {
 
     constructor(props) {
         super(props);
-        this.isSubscribed = this.isSubscribed.bind(this);
+        this.getSubscription = this.getSubscription.bind(this);
     }
 
-    isSubscribed(membershipPlanId) {
+    getSubscription(membershipPlanId) {
         const { subscriptions } = this.props;
-        if (subscriptions.allMembershipPlanIds.includes(membershipPlanId)) {
-            return true;
-        } else {
-            return false;
+        if (subscriptions.allMembershipPlanIds && subscriptions.allMembershipPlanIds.includes(membershipPlanId)) {
+            return subscriptions.byMembershipPlanId[membershipPlanId];
         }
     }
 
@@ -31,7 +29,7 @@ export default class SubscriptionPage extends Component {
                 </h2>
                 {
                     membershipPlans.map((membershipPlan, idx) => (
-                        <MembershipPlan membershipPlan={ membershipPlan } isSubscribed={ this.isSubscribed(membershipPlan.id) } key={ idx } />
+                        <MembershipPlan membershipPlan={ membershipPlan } subscription={ this.getSubscription(membershipPlan.id) } key={ idx } />
                     ))
                 }
             </div>
