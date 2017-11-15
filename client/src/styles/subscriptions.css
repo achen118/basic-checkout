@@ -4,3 +4,9 @@
     padding: 120px 60px 20px 60px;
     box-sizing: border-box;
 }
+
+.subscription-page-title {
+    font-weight: 700;
+    font-size: 72px;
+    letter-spacing: 10px;
+}
