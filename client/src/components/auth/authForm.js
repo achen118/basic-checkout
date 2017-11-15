@@ -34,6 +34,8 @@ export default class AuthForm extends Component {
     }
     
     render() {
+        const { errors } = this.props;
+        console.log(errors);
         const { pathname } = this.props.location;
         const formAction = pathname === "/signup" ? "Sign Up" : "Login";
         return (
@@ -57,6 +59,9 @@ export default class AuthForm extends Component {
                         value={ formAction }
                         type="submit" />
                 </form>
+                {
+                    errors.map((error, idx) => <li key={ idx }>{ error }</li>)
+                }
                 <Link to={ pathname === "/signup" ? "/login" : "/signup" }>
                     { pathname === "/signup" ? "Login" : "Sign Up" }
                 </Link>

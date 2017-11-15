@@ -25,7 +25,7 @@ export const login = auth => dispatch => {
                 const decoded = jwtDecode(response.data.jwt);
                 dispatch(receiveCurrentUser(decoded));
                 dispatch(clearErrors());
-            }, errors => dispatch(receiveErrors(errors.response.data))
+            }, errors => dispatch(receiveErrors(["Invalid credentials"]))
         );
 };
 
