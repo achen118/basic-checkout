@@ -1,5 +1,5 @@
 class Api::MembershipPlansController < ApplicationController
-    before_action :authenticate_api_user
+    before_action :authenticate_user
 
     def create
         @membership_plan = Membership.new(membership_plan_params)

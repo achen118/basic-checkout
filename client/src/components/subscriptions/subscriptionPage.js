@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import MembershipPlansContainer from '../membershipPlans/membershipPlansContainer';
+import '../../styles/subscriptions.css';
 
 export default class AuthForm extends Component {
     constructor(props) {
@@ -9,11 +11,8 @@ export default class AuthForm extends Component {
         console.log(this.props);
         console.log(localStorage);
         return (
-            <div>
-                <h1>Hello World</h1>
-                <button onClick={ this.handleLogout }>
-                    Logout
-                </button>
+            <div className="subscription-page-container">
+                <MembershipPlansContainer />
             </div>
         );
     }

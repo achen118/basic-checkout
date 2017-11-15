@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let store;
     if (localStorage.authToken) {
         const user = jwtDecode(localStorage.getItem('authToken'));
+        // Need to verify jwt
         const preloadedState = {
             currentUser: user
         };

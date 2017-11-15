@@ -3,7 +3,7 @@ import SubscriptionPage from './subscriptionPage';
 
 const mapStateToProps = state => {
     return {
-
+        currentUser: state.currentUser
     };
 };
 
