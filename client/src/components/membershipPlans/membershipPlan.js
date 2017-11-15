@@ -17,11 +17,12 @@ export default class MembershipPlans extends Component {
         });
     }
 
-    handleSubscribe() {
-
+    handleSubscribe(event) {
+        this.props.history.push(`/checkout/${event.target.id}/${this.state.guests}`);
     }
 
     render() {
+        console.log(this.props);
         const { membershipPlan, subscription } = this.props;
         let subscriptionCost;
         let subscriptionGuests;
@@ -52,8 +53,9 @@ export default class MembershipPlans extends Component {
                         <input
                             value={ this.state.guests }
                             onChange={ this.handleUpdate }
-                            id={membershipPlan.level} />
+                            id={ membershipPlan.level } />
                         <button
+                            id={ membershipPlan.id }
                             className="subscribe-button"
                             onClick={ this.handleSubscribe }>
                             Subscribe Now

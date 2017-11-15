@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MembershipPlan from '../membershipPlans/membershipPlan';
+import MembershipPlanContainer from '../membershipPlans/membershipPlanContainer';
 import '../../styles/subscriptions.css';
 
 export default class SubscriptionPage extends Component {
@@ -29,7 +29,7 @@ export default class SubscriptionPage extends Component {
                 </h2>
                 {
                     membershipPlans.map((membershipPlan, idx) => (
-                        <MembershipPlan membershipPlan={ membershipPlan } subscription={ this.getSubscription(membershipPlan.id) } key={ idx } />
+                        <MembershipPlanContainer membershipPlan={ membershipPlan } subscription={ this.getSubscription(membershipPlan.id) } key={ idx } />
                     ))
                 }
             </div>

@@ -4,6 +4,8 @@ import { AuthRoute, ProtectedRoute } from '../util/routeUtil';
 import AuthFormContainer from './auth/authFormContainer';
 import HeaderContainer from './header/headerContainer';
 import SubscriptionPageContainer from './subscriptions/subscriptionPageContainer';
+import CheckoutPageContainer from './checkout/checkoutPageContainer';
+
 import '../styles/App.css';
 
 export default class App extends Component {
@@ -13,6 +15,7 @@ export default class App extends Component {
                 <Route path="/" component={ HeaderContainer } />
                 <Switch>
                     <ProtectedRoute exact path="/subscriptions" component={ SubscriptionPageContainer } />
+                    <ProtectedRoute exact path="/checkout/:membershipPlanId/:guests" component={ CheckoutPageContainer } />
                     <AuthRoute exact path="/" component={ AuthFormContainer } />
                     <AuthRoute exact path="/login" component={ AuthFormContainer } />
                     <AuthRoute exact path="/signup" component={ AuthFormContainer } />
