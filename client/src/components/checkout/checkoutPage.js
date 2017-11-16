@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Elements } from 'react-stripe-elements';
+import CheckoutForm from './checkoutForm';
 import '../../styles/checkout.css';
 
 export default class CheckoutPage extends Component {
@@ -57,6 +59,9 @@ export default class CheckoutPage extends Component {
                         { `Total Cost: $${this.state.cost}` }
                     </li>
                 </ul>
+                <Elements>
+                    <CheckoutForm />
+                </Elements>
             </div>
         );
     }
