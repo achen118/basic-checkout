@@ -7,6 +7,7 @@
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
+    position: relative;
 }
 
 .membership-plan-li {
@@ -58,7 +59,7 @@
     text-align: center;
     padding: 5px;
     letter-spacing: 2px;
-    width: 10%;
+    width: 20%;
 }
 
 .subscribe-button {
@@ -67,4 +68,15 @@
     text-transform: uppercase;
     text-decoration: underline;
     letter-spacing: 2px;
+}
+
+.subscription-error {
+    position: absolute;
+    bottom: 6%;
+    right: 22%;
+    color: #F65600;
+}
+
+.guest-select {
+    font-size: 20px;
 }

@@ -2,23 +2,33 @@ class Api::SubscriptionsController < ApplicationController
     before_action :authenticate_user
 
     def create
-        @subscription = Subscription.new(subscription_params)
-        @subscription.user = current_user
-        if @subscription.save
-            render json: @subscription.as_json(except: [:created_at, :updated_at])
+        customer = Stripe::Customer.retrieve(current_user.customer_id)
+        if customer.subscriptions.total_count > 0 
+            @subscription = Stripe::Subscription.retrieve(customer.subscriptions.data.first.id)
+            Stripe::SubscriptionItem.create(
+                subscription: @subscription.id,
+                plan: params[:subscription][:membership_plan_id],
+                quantity: params[:subscription][:quantity],
+                prorate: false
+            )
+            @subscription = Stripe::Subscription.retrieve(@subscription.id)
         else
-            render json: @subscription.errors.full_messages, status: 422
+            @subscription = Stripe::Subscription.create(
+                customer: current_user.customer_id,
+                trial_period_days: 15,
+                source: params[:subscription][:stripe_token],
+                items: [
+                    {
+                        plan: params[:subscription][:membership_plan_id],
+                        quantity: params[:subscription][:quantity]
+                    }
+                ]
+            )        
         end
+        render json: @subscription
     end
 
     def index
-        @subscriptions = current_user.subscriptions
-        render json: @subscriptions.as_json(except: [:created_at, :updated_at])
-    end
-    
-    private
-
-    def subscription_params
-        params.require(:subscription).permit(:membership_plan_id, :cost, :guests)
+        render json: Stripe::Subscription.list(customer: current_user.customer_id).data.first
     end
 end

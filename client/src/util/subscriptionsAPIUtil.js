@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const fetchAllSubscriptions = () => {
+export const fetchSubscription = () => {
     return axios({
         url: '/api/subscriptions',
         headers: {

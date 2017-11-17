@@ -53,7 +53,9 @@ export default class AuthForm extends Component {
                     </h3>
                     <p className="switch-form-text">
                         {
-                            pathname === "/signup" ? "Already a member?" : "Not a member?"
+                            pathname === "/signup" ? 
+                            "Already a member?" : 
+                            "Not a member?"
                         }
                     </p>
                     <Link

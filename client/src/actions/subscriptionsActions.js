@@ -1,15 +1,7 @@
 import * as subscriptionsAPIUtil from '../util/subscriptionsAPIUtil';
-import { receiveErrors, clearErrors } from './errorsActions';
+import { clearErrors } from './errorsActions';
 
-export const RECEIVE_ALL_SUBSCRIPTIONS = "RECEIVE_ALL_SUBSCRIPTIONS";
 export const RECEIVE_SUBSCRIPTION = "RECEIVE_SUBSCRIPTION";
-
-export const receiveAllSubscriptions = subscriptions => {
-    return {
-        type: RECEIVE_ALL_SUBSCRIPTIONS,
-        subscriptions
-    };
-};
 
 export const receiveSubscription = subscription => {
     return {
@@ -18,11 +10,20 @@ export const receiveSubscription = subscription => {
     };
 };
 
-export const fetchAllSubscriptions = () => dispatch => {
-    return subscriptionsAPIUtil.fetchAllSubscriptions()
+export const fetchSubscription = () => dispatch => {
+    return subscriptionsAPIUtil.fetchSubscription()
         .then(response => {
-            dispatch(receiveAllSubscriptions(response.data));
+            dispatch(receiveSubscription(response.data));
             dispatch(clearErrors());
-            }, errors => dispatch(receiveErrors(errors.response.data))
-        );
+        }, errors => console.log(errors)
+    );
+};
+
+export const addSubscription = subscription => dispatch => {
+    return subscriptionsAPIUtil.addSubscription(subscription)
+        .then(response => {
+            dispatch(receiveSubscription(response.data));
+            dispatch(clearErrors());
+        }
+    );
 };

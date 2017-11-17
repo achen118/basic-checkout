@@ -1,35 +1,36 @@
 import React, { Component } from 'react';
-import MembershipPlanContainer from '../membershipPlans/membershipPlanContainer';
+import MembershipPlan from '../membershipPlans/membershipPlan';
 import '../../styles/subscriptions.css';
 
 export default class SubscriptionPage extends Component {
     componentDidMount() {
         this.props.fetchAllMembershipPlans();
-        this.props.fetchAllSubscriptions();
-    }
-
-    constructor(props) {
-        super(props);
-        this.getSubscription = this.getSubscription.bind(this);
-    }
-
-    getSubscription(membershipPlanId) {
-        const { subscriptions } = this.props;
-        if (subscriptions.allMembershipPlanIds && subscriptions.allMembershipPlanIds.includes(membershipPlanId)) {
-            return subscriptions.byMembershipPlanId[membershipPlanId];
-        }
+        this.props.fetchSubscription();
     }
 
     render() {
-        const { membershipPlans } = this.props;
+        const { membershipPlans, errors } = this.props;
         return (
             <div className="subscription-page-container">
                 <h2 className="subscription-page-title">
                     My Subscription Page
                 </h2>
+                <ul className="subscription-page-errors">
+                    {
+                        errors.map((error, idx) => (
+                            <li key={ idx }>
+                                { error }
+                            </li>
+                        ))
+                    }
+                </ul>
                 {
-                    membershipPlans.map((membershipPlan, idx) => (
-                        <MembershipPlanContainer membershipPlan={ membershipPlan } subscription={ this.getSubscription(membershipPlan.id) } key={ idx } />
+                    membershipPlans.allIds.map((membershipPlanId, idx) => (
+                        <MembershipPlan
+                            membershipPlan={ membershipPlans.byId[membershipPlanId] } 
+                            subscription={ this.props.subscription } 
+                            history={ this.props.history }
+                            key={ idx } />
                     ))
                 }
             </div>
