@@ -3,8 +3,8 @@ class Api::SubscriptionsController < ApplicationController
 
     def create
         @subscription = Subscription.new(subscription_params)
-        @subscription.user = current_user
-        if @subscription.save
+        @subscription.user = 
+        if @subscription.process_payment && @subscription.save
             render json: @subscription.as_json(except: [:created_at, :updated_at])
         else
             render json: @subscription.errors.full_messages, status: 422
@@ -19,6 +19,6 @@ class Api::SubscriptionsController < ApplicationController
     private
 
     def subscription_params
-        params.require(:subscription).permit(:membership_plan_id, :cost, :guests)
+        params.require(:subscription).permit(:membership_plan_id, :cost, :guests, :stripe_token)
     end
 end

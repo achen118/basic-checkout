@@ -6,10 +6,12 @@ class Subscription < ApplicationRecord
     belongs_to :membership_plan
 
     def process_payment
-    customer = Stripe::Customer.create(email: email, card: stripe_token)
-    Stripe::Charge.create customer: customer.id,
-                          amount: course.price * 100,
-                          description: course.name,
-                          currency: 'usd'
+        customer = Stripe::Customer.create(email: user.email, card: stripe_token)
+        Stripe::Charge.create(
+            customer: customer.id,
+            amount: cost * 100,
+            description: :membership_plan.level,
+            currency: 'usd'
+        )
     end
 end
