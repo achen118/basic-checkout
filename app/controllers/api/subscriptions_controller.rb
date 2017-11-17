@@ -4,11 +4,12 @@ class Api::SubscriptionsController < ApplicationController
     def create
         customer = Stripe::Customer.retrieve(current_user.customer_id)
         if customer.subscriptions.total_count > 0 
-            @subscription = Stripe::Subscription.retrieve(customer.subscriptions.data.first)
+            @subscription = Stripe::Subscription.retrieve(customer.subscriptions.data.first.id)
             Stripe::SubscriptionItem.create(
                 subscription: @subscription.id,
                 plan: params[:subscription][:membership_plan_id],
                 quantity: params[:subscription][:quantity],
+                prorate: false
             )
             @subscription = Stripe::Subscription.retrieve(@subscription.id)
         else

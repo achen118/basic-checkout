@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MembershipPlanContainer from '../membershipPlans/membershipPlanContainer';
+import MembershipPlan from '../membershipPlans/membershipPlan';
 import '../../styles/subscriptions.css';
 
 export default class SubscriptionPage extends Component {
@@ -9,7 +9,6 @@ export default class SubscriptionPage extends Component {
     }
 
     render() {
-        console.log(this.props);
         const { membershipPlans, errors } = this.props;
         return (
             <div className="subscription-page-container">
@@ -18,14 +17,19 @@ export default class SubscriptionPage extends Component {
                 </h2>
                 <ul className="subscription-page-errors">
                     {
-                        errors.map((error, idx) => <li key={ idx }>{ error }</li>)
+                        errors.map((error, idx) => (
+                            <li key={ idx }>
+                                { error }
+                            </li>
+                        ))
                     }
                 </ul>
                 {
                     membershipPlans.allIds.map((membershipPlanId, idx) => (
-                        <MembershipPlanContainer 
+                        <MembershipPlan
                             membershipPlan={ membershipPlans.byId[membershipPlanId] } 
                             subscription={ this.props.subscription } 
+                            history={ this.props.history }
                             key={ idx } />
                     ))
                 }

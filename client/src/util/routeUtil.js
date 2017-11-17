@@ -26,5 +26,9 @@ const mapStateToProps = state => {
     return { loggedIn: Boolean(state.currentUser) };
 };
 
-export const AuthRoute = withRouter(connect(mapStateToProps, null)(Auth));
-export const ProtectedRoute = withRouter(connect(mapStateToProps, null)(Protected));
+export const AuthRoute = withRouter(connect(
+    mapStateToProps
+)(Auth));
+export const ProtectedRoute = withRouter(connect(
+    mapStateToProps
+)(Protected));

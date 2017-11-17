@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import '../../styles/header.css';
 
 export default class Header extends Component {
@@ -22,7 +23,9 @@ export default class Header extends Component {
         }
         return (
             <header className="app-header">
-                <h1 className="title">SF Social Club</h1>
+                <Link to='/subscriptions'>
+                    <h1 className="title">SF Social Club</h1>
+                </Link>
                 { logoutButton }
             </header>
         );

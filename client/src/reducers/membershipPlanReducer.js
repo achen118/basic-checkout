@@ -7,7 +7,7 @@ const MembershipPlanReducer = (state = null, action) => {
         case RECEIVE_MEMBERSHIP_PLAN:
             return action.membershipPlan;
         case CLEAR_STORE:
-            return [];
+            return null;
         default:
             return state;
     }

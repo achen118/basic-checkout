@@ -23,3 +23,8 @@
     cursor: pointer;
     border-left: 1px solid #EAEAEA;
 }
+
+.app-header a {
+    text-decoration: none;
+    color: #F65600;
+}

@@ -31,10 +31,12 @@ export default class CheckoutPage extends Component {
     addSubscription() {
         this.props.addSubscription({
             membership_plan_id: this.state.membershipPlanId,
-            guests: this.state.guests,
             quantity: this.state.quantity,
             stripe_token: this.state.stripeToken
-        });
+        }).then(
+            () => this.props.history.goBack(), 
+            errors => this.props.receiveErrors(["You are already subscribed"])
+        );
     }
     
     receiveStripeToken(token) {
@@ -44,11 +46,13 @@ export default class CheckoutPage extends Component {
     }
     
     render() {
-        const { membershipPlan } = this.props;
+        const { membershipPlan, errors } = this.props;
         let checkoutInfo;
         if (membershipPlan) {
-            const guestCost = membershipPlan.name === "Basic" ? membershipPlan.amount / 100 : 0;
-            const totalCost = this.state.guests * guestCost + membershipPlan.amount / 100;
+            const guestCost = membershipPlan.name === "Basic" ? 
+                              membershipPlan.amount / 100 : 0;
+            const totalCost = (this.state.guests * guestCost 
+                            + membershipPlan.amount / 100).toFixed(2);
             checkoutInfo = <div className="checkout-container">
                 <h2 className="checkout-page-title">
                     { `${membershipPlan.name} Subscription` }
@@ -64,8 +68,18 @@ export default class CheckoutPage extends Component {
                         { `Total Cost: $${totalCost}` }
                     </li>
                 </ul>
+                <ul>
+                    {
+                        errors.map((error, idx) => (
+                            <li key={ idx }>
+                                { error }
+                            </li>
+                        ))
+                    }
+                </ul>
                 <Elements>
-                    <CheckoutForm receiveStripeToken={ this.receiveStripeToken }  />
+                    <CheckoutForm 
+                        receiveStripeToken={ this.receiveStripeToken } />
                 </Elements>
             </div>;
         }

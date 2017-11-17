@@ -8,6 +8,12 @@ import CheckoutPageContainer from './checkout/checkoutPageContainer';
 import '../styles/App.css';
 
 export default class App extends Component {
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.location.pathname !== this.props.location.pathname) {
+            console.log("yes");
+        }
+    }
+
     render() {
         return (
             <div className="app">

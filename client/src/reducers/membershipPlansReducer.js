@@ -21,7 +21,7 @@ const MembershipPlansReducer = (state = defaultState, action) => {
             });
             return nextState;
         case CLEAR_STORE:
-            return [];
+            return defaultState;
         default:
             return state;
     }
