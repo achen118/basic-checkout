@@ -41,14 +41,15 @@ export default class CheckoutPage extends Component {
         this.props.addSubscription({
             membership_plan_id: this.state.membershipPlanId,
             guests: this.state.guests,
-            cost: this.state.cost
+            cost: this.state.cost,
+            stripe_token: this.state.stripeToken
         });
     }
 
     receiveStripeToken(token) {
         this.setState({
             stripeToken: token
-        });
+        }, () => this.addSubscription());
     }
 
     render() {

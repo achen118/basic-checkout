@@ -3,7 +3,7 @@ class Api::SubscriptionsController < ApplicationController
 
     def create
         @subscription = Subscription.new(subscription_params)
-        @subscription.user = 
+        @subscription.user = current_user
         if @subscription.process_payment && @subscription.save
             render json: @subscription.as_json(except: [:created_at, :updated_at])
         else

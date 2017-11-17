@@ -12,7 +12,8 @@ class CheckoutForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.stripe.createToken().then(payload => this.props.receiveStripeToken(payload.token.id));
+        this.props.stripe.createToken()
+            .then(payload => this.props.receiveStripeToken(payload.token.id));
     }
 
     render() {
