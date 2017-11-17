@@ -7,7 +7,8 @@ const mapStateToProps = state => {
     return {
         currentUser: state.currentUser,
         membershipPlans: state.membershipPlans,
-        subscriptions: state.subscriptions
+        subscriptions: state.subscriptions,
+        errors: state.errors
     };
 };
 

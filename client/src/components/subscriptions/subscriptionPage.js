@@ -5,7 +5,7 @@ import '../../styles/subscriptions.css';
 export default class SubscriptionPage extends Component {
     componentDidMount() {
         this.props.fetchAllMembershipPlans();
-        this.props.fetchAllSubscriptions();
+        // this.props.fetchAllSubscriptions();
     }
     
     constructor(props) {
@@ -21,12 +21,17 @@ export default class SubscriptionPage extends Component {
     }
 
     render() {
-        const { membershipPlans } = this.props;
+        const { membershipPlans, errors } = this.props;
         return (
             <div className="subscription-page-container">
                 <h2 className="subscription-page-title">
                     My Subscription Page
                 </h2>
+                <ul className="subscription-page-errors">
+                    {
+                        errors.map((error, idx) => <li key={ idx }>{ error }</li>)
+                    }
+                </ul>
                 {
                     membershipPlans.allIds.map((membershipPlanId, idx) => (
                         <MembershipPlanContainer 

@@ -10,3 +10,9 @@
     font-size: 56px;
     letter-spacing: 10px;
 }
+
+.subscription-page-errors {
+    margin-top: 60px;
+    color: #F65600;
+    font-weight: 700;
+}

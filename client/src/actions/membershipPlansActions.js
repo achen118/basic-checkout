@@ -15,6 +15,6 @@ export const fetchAllMembershipPlans = () => dispatch => {
         .then(response => { 
             dispatch(receiveAllMembershipPlans(response.data));
             dispatch(clearErrors());
-            }, errors => dispatch(receiveErrors(errors.response.data))
+            }, error =>  dispatch(receiveErrors(["No membership plans available"]))
         );
 };
