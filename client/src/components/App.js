@@ -14,7 +14,7 @@ export default class App extends Component {
                 <Route path="/" component={ HeaderContainer } />
                 <Switch>
                     <ProtectedRoute exact path="/subscriptions" component={ SubscriptionPageContainer } />
-                    <ProtectedRoute exact path="/checkout/:membershipPlanId/:guests" component={ CheckoutPageContainer } />
+                    <ProtectedRoute exact path="/checkout/:membershipPlanId/:quantity/:guests" component={ CheckoutPageContainer } />
                     <AuthRoute exact path="/" component={ AuthFormContainer } />
                     <AuthRoute exact path="/login" component={ AuthFormContainer } />
                     <AuthRoute exact path="/signup" component={ AuthFormContainer } />

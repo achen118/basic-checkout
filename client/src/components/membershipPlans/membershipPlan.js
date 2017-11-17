@@ -5,7 +5,8 @@ export default class MembershipPlans extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            guests: 0
+            guests: 0,
+            quantity: 1
         };
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleSubscribe = this.handleSubscribe.bind(this);
@@ -13,9 +14,16 @@ export default class MembershipPlans extends Component {
     }
 
     handleUpdate(event) {
-        this.setState({
-            guests: event.target.value
-        });
+        if (this.props.membershipPlan.name === "Basic") {
+            this.setState({
+                guests: event.target.value,
+                quantity: event.target.value + 1
+            });
+        } else {
+            this.setState({
+                guests: event.target.value
+            });
+        }
     }
 
     handleSubscribe(event) {
@@ -25,7 +33,7 @@ export default class MembershipPlans extends Component {
             this.props.receiveErrors([{ [membershipPlan.id]: "5 guests maximum" }]);
         } else {
             this.props.clearErrors();
-            this.props.history.push(`/checkout/${event.target.id}/${this.state.guests}`);
+            this.props.history.push(`/checkout/${membershipPlan.id}/${this.state.quantity}/${this.state.guests}`);
         }
     }
 
@@ -71,10 +79,8 @@ export default class MembershipPlans extends Component {
                         <p>Number of Guests:</p>
                         <input
                             value={ this.state.guests }
-                            onChange={ this.handleUpdate }
-                            id={ membershipPlan.name } />
+                            onChange={ this.handleUpdate } />
                         <button
-                            id={ membershipPlan.id }
                             className="subscribe-button"
                             onClick={ this.handleSubscribe }>
                             Subscribe Now

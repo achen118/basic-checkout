@@ -14,13 +14,15 @@ export default class CheckoutPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.membershipPlans.allIds.length > 0 &&
-            nextProps.membershipPlans.allIds !== this.props.membershipPlans.allIds) {
-            this.level = nextProps.membershipPlans.byId[this.state.membershipPlanId].level;
-            this.cost = nextProps.membershipPlans.byId[this.state.membershipPlanId].cost;
-            this.guestCost = nextProps.membershipPlans.byId[this.state.membershipPlanId].guest_cost;
+        const { membershipPlans } = nextProps;
+        const { membershipPlanId } = this.state;
+        if (membershipPlans.allIds.length > 0 &&
+            membershipPlans.allIds !== this.props.membershipPlans.allIds) {
+            this.name = membershipPlans.byId[membershipPlanId].name;
+            this.amount = membershipPlans.byId[membershipPlanId].amount / 100;
+            this.guestCost = 0;
             this.setState({
-                cost: (this.cost + (this.state.guests * this.guestCost)).toFixed(2)
+                amount: (this.amount + (this.state.guests * this.guestCost)).toFixed(2)
             });
         }
     }
@@ -30,7 +32,7 @@ export default class CheckoutPage extends Component {
         this.state = {
             membershipPlanId: "",
             guests: "",
-            cost: "",
+            amount: "",
             stripeToken: ""
         };
         this.addSubscription = this.addSubscription.bind(this);
@@ -41,7 +43,7 @@ export default class CheckoutPage extends Component {
         this.props.addSubscription({
             membership_plan_id: this.state.membershipPlanId,
             guests: this.state.guests,
-            cost: this.state.cost,
+            amount: this.state.amount,
             stripe_token: this.state.stripeToken
         });
     }
@@ -56,17 +58,17 @@ export default class CheckoutPage extends Component {
         return (
             <div className="checkout-container">
                 <h2 className="checkout-page-title">
-                    { `${this.level} Subscription` }
+                    { `${this.name} Subscription` }
                 </h2>
                 <ul>
                     <li>
-                        { `Monthly Cost: $${this.cost}` }
+                        { `Monthly Cost: $${this.amount}` }
                     </li>
                     <li>
                         { `${this.state.guests} guests x $${this.guestCost}` }
                     </li>
                     <li>
-                        { `Total Cost: $${this.state.cost}` }
+                        { `Total Cost: $${this.state.amount}` }
                     </li>
                 </ul>
                 <Elements>
