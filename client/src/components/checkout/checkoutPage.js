@@ -6,14 +6,15 @@ import '../../styles/checkout.css';
 export default class CheckoutPage extends Component {
     componentDidMount() {
         const { membershipPlanId, quantity, guests } = this.props.match.params;
+        this.props.fetchSubscription();
         this.props.fetchMembershipPlan(membershipPlanId)
-        .then(() => {
-            this.setState({
-                membershipPlanId: membershipPlanId,
-                guests: guests,
-                quantity: quantity
-            }); 
-        });
+            .then(() => {
+                this.setState({
+                    membershipPlanId: membershipPlanId,
+                    guests: guests,
+                    quantity: quantity
+                }); 
+            });
     }
     
     constructor(props) {
@@ -46,42 +47,53 @@ export default class CheckoutPage extends Component {
     }
     
     render() {
-        const { membershipPlan, errors } = this.props;
+        const { membershipPlan, errors, subscription } = this.props;
         let checkoutInfo;
+        let checkoutForm = 
+            <button
+                className="update-sub-button"
+                onClick={ this.addSubscription }>
+                Confirm subscription with previous credit card
+            </button>;
+        if (!subscription) {
+            checkoutForm = 
+                <Elements>
+                    <CheckoutForm
+                        receiveStripeToken={this.receiveStripeToken} />
+                </Elements>;
+        }
         if (membershipPlan) {
             const guestCost = membershipPlan.name === "Basic" ? 
                               membershipPlan.amount / 100 : 0;
             const totalCost = (this.state.guests * guestCost 
                             + membershipPlan.amount / 100).toFixed(2);
-            checkoutInfo = <div className="checkout-container">
-                <h2 className="checkout-page-title">
-                    { `${membershipPlan.name} Subscription` }
-                </h2>
-                <ul>
-                    <li>
-                        { `Monthly Cost: $${membershipPlan.amount / 100}` }
-                    </li>
-                    <li>
-                        {`${this.state.guests} guests x $${guestCost}` }
-                    </li>
-                    <li>
-                        { `Total Cost: $${totalCost}` }
-                    </li>
-                </ul>
-                <ul>
-                    {
-                        errors.map((error, idx) => (
-                            <li key={ idx }>
-                                { error }
-                            </li>
-                        ))
-                    }
-                </ul>
-                <Elements>
-                    <CheckoutForm 
-                        receiveStripeToken={ this.receiveStripeToken } />
-                </Elements>
-            </div>;
+            checkoutInfo = 
+                <div className="checkout-container">
+                    <h2 className="checkout-page-title">
+                        { `${membershipPlan.name} Subscription` }
+                    </h2>
+                    <ul>
+                        <li>
+                            { `Monthly Cost: $${membershipPlan.amount / 100}` }
+                        </li>
+                        <li>
+                            {`${this.state.guests} guests x $${guestCost}` }
+                        </li>
+                        <li>
+                            { `Total Cost: $${totalCost}` }
+                        </li>
+                    </ul>
+                    <ul>
+                        {
+                            errors.map((error, idx) => (
+                                <li key={ idx }>
+                                    { error }
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    { checkoutForm }
+                </div>;
         }
         return (
             <div>
