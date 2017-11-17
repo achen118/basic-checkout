@@ -3,31 +3,31 @@ class Api::SubscriptionsController < ApplicationController
 
     def create
         customer = Stripe::Customer.retrieve(current_user.customer_id)
-        # if customer.subscriptions.total_count > 0 
-        #     @subscription = Stripe::Subscription.retrieve(customer.subscriptions.data.first)
-        #     subscription.tax_percent = 10
-        #     subscription.save
-
-        # else
+        if customer.subscriptions.total_count > 0 
+            @subscription = Stripe::Subscription.retrieve(customer.subscriptions.data.first)
+            Stripe::SubscriptionItem.create(
+                subscription: @subscription.id,
+                plan: params[:subscription][:membership_plan_id],
+                quantity: params[:subscription][:quantity],
+            )
+            @subscription = Stripe::Subscription.retrieve(@subscription.id)
+        else
             @subscription = Stripe::Subscription.create(
                 customer: current_user.customer_id,
                 trial_period_days: 15,
                 source: params[:subscription][:stripe_token],
                 items: [
                     {
-                        plan: params[:subscription][:id],
+                        plan: params[:subscription][:membership_plan_id],
                         quantity: params[:subscription][:quantity]
                     }
-                ],
-                metadata: {
-                    guests: params[:subscription][:guests]
-                }
+                ]
             )        
-        # end
+        end
         render json: @subscription
     end
 
     def index
-        render json: Stripe::Subscription.list(customer: current_user.customer_id).data
+        render json: Stripe::Subscription.list(customer: current_user.customer_id).data.first
     end
 end

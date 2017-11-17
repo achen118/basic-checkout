@@ -5,22 +5,11 @@ import '../../styles/subscriptions.css';
 export default class SubscriptionPage extends Component {
     componentDidMount() {
         this.props.fetchAllMembershipPlans();
-        this.props.fetchAllSubscriptions();
-    }
-    
-    constructor(props) {
-        super(props);
-        this.getSubscription = this.getSubscription.bind(this);
-    }
-
-    getSubscription(membershipPlanId) {
-        const { subscriptions } = this.props;
-        if (subscriptions.allMembershipPlanIds && subscriptions.allMembershipPlanIds.includes(membershipPlanId)) {
-            return subscriptions.byMembershipPlanId[membershipPlanId];
-        }
+        this.props.fetchSubscription();
     }
 
     render() {
+        console.log(this.props);
         const { membershipPlans, errors } = this.props;
         return (
             <div className="subscription-page-container">
@@ -36,7 +25,7 @@ export default class SubscriptionPage extends Component {
                     membershipPlans.allIds.map((membershipPlanId, idx) => (
                         <MembershipPlanContainer 
                             membershipPlan={ membershipPlans.byId[membershipPlanId] } 
-                            subscription={ this.getSubscription(membershipPlanId) } 
+                            subscription={ this.props.subscription } 
                             key={ idx } />
                     ))
                 }

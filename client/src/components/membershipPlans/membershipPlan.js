@@ -9,6 +9,7 @@ export default class MembershipPlans extends Component {
             quantity: 1
         };
         this.handleUpdate = this.handleUpdate.bind(this);
+        this.isSubscribed = this.isSubscribed.bind(this);
         this.handleSubscribe = this.handleSubscribe.bind(this);
     }
 
@@ -25,30 +26,37 @@ export default class MembershipPlans extends Component {
         }
     }
 
-    handleSubscribe(event) {
-        const { membershipPlan } = this.props;
-        if (membershipPlan.name !== "Basic" && 
-            this.state.guests > 5) {
-            this.props.receiveErrors([{ [membershipPlan.id]: "5 guests maximum" }]);
-        } else {
-            this.props.clearErrors();
-            let guests = 0;
-            let quantity = this.state.quantity || 0;
-            if (this.state.guests) {
-                guests = parseInt(this.state.guests);
+    isSubscribed() {
+        const { subscription, membershipPlan } = this.props;
+        if (subscription && subscription.plan) {
+            if (subscription.plan.id === membershipPlan.id) {
+                this.subscriptionCost = subscription.plan.amount / 100 * subscription.quantity;
+                return true;
             }
-            this.props.history.push(`/checkout/${membershipPlan.id}/${quantity}/${guests}`);
+        } else if (subscription && subscription.items.data.length > 1) {
+            for (let i = 0; i < subscription.items.data.length; i++) {
+                if (subscription.items.data[i].plan.id === membershipPlan.id) {
+                    this.subscriptionCost = subscription.items.data[i].plan.amount / 100 * subscription.items.data[i].quantity;
+                    return true;
+                }
+            }
+        } else {
+            return false;
         }
+    }
+
+    handleSubscribe(event) {
+        const { membershipPlan, history } = this.props;
+        let guests = 0;
+        let quantity = this.state.quantity || 0;
+        if (this.state.guests) {
+            guests = parseInt(this.state.guests);
+        }
+        history.push(`/checkout/${membershipPlan.id}/${quantity}/${guests}`);
     }
 
     render() {
         const { membershipPlan, subscription } = this.props;
-        let subscriptionCost;
-        let subscriptionGuests;
-        if (subscription) {
-            subscriptionCost = subscription.cost;
-            subscriptionGuests = subscription.guests;
-        }
         return (
                 <ul 
                     className="membership-plan-ul">
@@ -67,7 +75,7 @@ export default class MembershipPlans extends Component {
                         </li>
                     </section>
                     <section 
-                        className={ subscription ? "unsubscribed hidden" : "unsubscribed" }>
+                        className={ this.isSubscribed() ? "unsubscribed hidden" : "unsubscribed" }>
                         <p>Number of Guests:</p>
                         {
                             membershipPlan.name === "Basic" ?
@@ -75,24 +83,12 @@ export default class MembershipPlans extends Component {
                                 value={ this.state.guests }
                                 onChange={ this.handleUpdate } /> :
                             <select className="guest-select" onChange={ this.handleUpdate }>
-                                <option value="0">
-                                    0
-                                </option>
-                                <option value="1">
-                                    1
-                                </option>
-                                <option value="2">
-                                    2
-                                </option>
-                                <option value="3">
-                                    3
-                                </option>
-                                <option value="4">
-                                    4
-                                </option>
-                                <option value="5">
-                                    5
-                                </option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
                             </select>
                         }
                         <button
@@ -102,10 +98,9 @@ export default class MembershipPlans extends Component {
                         </button>
                     </section>
                     <section 
-                        className={ subscription ? "subscribed" : "subscribed hidden" }>
+                        className={ this.isSubscribed() ? "subscribed" : "subscribed hidden" }>
                         <p>Subscribed</p>
-                        <p>{`$${subscriptionCost} / month`}</p>
-                        <p>{`${subscriptionGuests} guests`}</p>
+                        <p>{`$${this.subscriptionCost} / month`}</p>
                     </section>
                 </ul>
         );
