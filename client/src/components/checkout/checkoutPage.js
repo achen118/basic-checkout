@@ -5,24 +5,13 @@ import '../../styles/checkout.css';
 
 export default class CheckoutPage extends Component {
     componentDidMount() {
-        const { membershipPlanId, quantity, guests } = this.props.match.params;
         this.props.fetchSubscription();
-        this.props.fetchMembershipPlan(membershipPlanId)
-            .then(() => {
-                this.setState({
-                    membershipPlanId: membershipPlanId,
-                    guests: guests,
-                    quantity: quantity
-                }); 
-            });
+        this.props.fetchMembershipPlan(this.props.match.params.membershipPlanId);
     }
     
     constructor(props) {
         super(props);
         this.state = {
-            membershipPlanId: "",
-            guests: "",
-            quantity: "",
             stripeToken: ""
         };
         this.addSubscription = this.addSubscription.bind(this);
@@ -30,12 +19,13 @@ export default class CheckoutPage extends Component {
     }
     
     addSubscription() {
+        const { membershipPlanId, quantity, guests } = this.props.match.params;
         this.props.addSubscription({
-            membership_plan_id: this.state.membershipPlanId,
-            quantity: this.state.quantity,
+            membership_plan_id: membershipPlanId,
+            quantity: quantity,
             stripe_token: this.state.stripeToken
         }).then(
-            () => this.props.history.goBack(), 
+            () => this.props.history.push('/subscriptions'), 
             errors => this.props.receiveErrors(["You are already subscribed"])
         );
     }
@@ -48,6 +38,7 @@ export default class CheckoutPage extends Component {
     
     render() {
         const { membershipPlan, errors, subscription } = this.props;
+        const { guests } = this.props.match.params;
         let checkoutInfo;
         let checkoutForm = 
             <button
@@ -59,13 +50,13 @@ export default class CheckoutPage extends Component {
             checkoutForm = 
                 <Elements>
                     <CheckoutForm
-                        receiveStripeToken={this.receiveStripeToken} />
+                        receiveStripeToken={ this.receiveStripeToken } />
                 </Elements>;
         }
         if (membershipPlan) {
             const guestCost = membershipPlan.name === "Basic" ? 
                               membershipPlan.amount / 100 : 0;
-            const totalCost = (this.state.guests * guestCost 
+            const totalCost = (guests * guestCost 
                             + membershipPlan.amount / 100).toFixed(2);
             checkoutInfo = 
                 <div className="checkout-container">
@@ -77,7 +68,7 @@ export default class CheckoutPage extends Component {
                             { `Monthly Cost: $${membershipPlan.amount / 100}` }
                         </li>
                         <li>
-                            {`${this.state.guests} guests x $${guestCost}` }
+                            {`${guests} guests x $${guestCost}` }
                         </li>
                         <li>
                             { `Total Cost: $${totalCost}` }
