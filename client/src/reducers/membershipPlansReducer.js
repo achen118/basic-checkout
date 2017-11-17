@@ -15,7 +15,7 @@ const MembershipPlansReducer = (state = defaultState, action) => {
             nextState = merge({}, defaultState);
             action.membershipPlans.forEach(membershipPlan => {
                 if (!nextState.allIds.includes(membershipPlan.id)) {
-                    nextState.allIds.push(membershipPlan.id);
+                    nextState.allIds.unshift(membershipPlan.id);
                 }
                 nextState.byId[membershipPlan.id] = membershipPlan;
             });

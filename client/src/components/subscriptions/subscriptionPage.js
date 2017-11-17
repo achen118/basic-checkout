@@ -21,6 +21,7 @@ export default class SubscriptionPage extends Component {
     }
 
     render() {
+        console.log(this.props);
         const { membershipPlans, errors } = this.props;
         return (
             <div className="subscription-page-container">
