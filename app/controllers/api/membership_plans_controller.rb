@@ -6,6 +6,6 @@ class Api::MembershipPlansController < ApplicationController
     end
 
     def show
-        render json: Stripe::Plan.retrieve(params[:membership_plan_id])
+        render json: Stripe::Plan.retrieve(params[:id])
     end
 end
