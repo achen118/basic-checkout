@@ -5,7 +5,7 @@ import '../../styles/subscriptions.css';
 export default class SubscriptionPage extends Component {
     componentDidMount() {
         this.props.fetchAllMembershipPlans();
-        // this.props.fetchAllSubscriptions();
+        this.props.fetchAllSubscriptions();
     }
     
     constructor(props) {
@@ -21,7 +21,6 @@ export default class SubscriptionPage extends Component {
     }
 
     render() {
-        console.log(this.props);
         const { membershipPlans, errors } = this.props;
         return (
             <div className="subscription-page-container">

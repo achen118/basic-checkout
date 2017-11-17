@@ -53,7 +53,6 @@ export default class CheckoutPage extends Component {
     }
 
     render() {
-        console.log(this.state);
         return (
             <div className="checkout-container">
                 <h2 className="checkout-page-title">

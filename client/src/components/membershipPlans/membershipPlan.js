@@ -20,7 +20,7 @@ export default class MembershipPlans extends Component {
 
     handleSubscribe(event) {
         const { membershipPlan } = this.props;
-        if (membershipPlan.level !== "Basic" && 
+        if (membershipPlan.name !== "Basic" && 
             this.state.guests > 5) {
             this.props.receiveErrors([{ [membershipPlan.id]: "5 guests maximum" }]);
         } else {
@@ -42,6 +42,7 @@ export default class MembershipPlans extends Component {
 
     render() {
         const { membershipPlan, subscription } = this.props;
+        console.log(membershipPlan);
         let subscriptionCost;
         let subscriptionGuests;
         if (subscription) {
@@ -54,15 +55,15 @@ export default class MembershipPlans extends Component {
                     <section className="membership-plan-li">
                         <li
                             className="membership-plan-level">
-                            { membershipPlan.level }
+                            { membershipPlan.name }
                         </li>
                         <li
                             className="membership-plan-cost">
-                            { `$${membershipPlan.cost} / month` }
+                            { `$${membershipPlan.amount / 100} / month` }
                         </li>
                         <li
                             className="membership-plan-description">
-                            { membershipPlan.description }
+                            { membershipPlan.metadata.description }
                         </li>
                     </section>
                     <section 
@@ -71,7 +72,7 @@ export default class MembershipPlans extends Component {
                         <input
                             value={ this.state.guests }
                             onChange={ this.handleUpdate }
-                            id={ membershipPlan.level } />
+                            id={ membershipPlan.name } />
                         <button
                             id={ membershipPlan.id }
                             className="subscribe-button"

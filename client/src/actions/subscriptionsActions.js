@@ -23,7 +23,7 @@ export const fetchAllSubscriptions = () => dispatch => {
         .then(response => {
             dispatch(receiveAllSubscriptions(response.data));
             dispatch(clearErrors());
-            }, errors => dispatch(receiveErrors(errors.response.data))
+            }, errors => console.log(errors)
         );
 };
 
