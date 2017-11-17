@@ -14,7 +14,8 @@ export default class CheckoutPage extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.membershipPlans.allIds.length > 0) {
+        if (nextProps.membershipPlans.allIds.length > 0 &&
+            nextProps.membershipPlans.allIds !== this.props.membershipPlans.allIds) {
             this.level = nextProps.membershipPlans.byId[this.state.membershipPlanId].level;
             this.cost = nextProps.membershipPlans.byId[this.state.membershipPlanId].cost;
             this.guestCost = nextProps.membershipPlans.byId[this.state.membershipPlanId].guest_cost;
@@ -29,9 +30,11 @@ export default class CheckoutPage extends Component {
         this.state = {
             membershipPlanId: "",
             guests: "",
-            cost: ""
+            cost: "",
+            stripeToken: ""
         };
         this.addSubscription = this.addSubscription.bind(this);
+        this.receiveStripeToken = this.receiveStripeToken.bind(this);
     }
 
     addSubscription() {
@@ -42,7 +45,14 @@ export default class CheckoutPage extends Component {
         });
     }
 
+    receiveStripeToken(token) {
+        this.setState({
+            stripeToken: token
+        });
+    }
+
     render() {
+        console.log(this.state);
         return (
             <div className="checkout-container">
                 <h2 className="checkout-page-title">
@@ -60,7 +70,7 @@ export default class CheckoutPage extends Component {
                     </li>
                 </ul>
                 <Elements>
-                    <CheckoutForm />
+                    <CheckoutForm receiveStripeToken={ this.receiveStripeToken }  />
                 </Elements>
             </div>
         );
