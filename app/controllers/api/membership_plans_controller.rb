@@ -4,4 +4,8 @@ class Api::MembershipPlansController < ApplicationController
     def index
         render json: Stripe::Plan.list.data
     end
+
+    def show
+        render json: Stripe::Plan.retrieve(params[:membership_plan_id])
+    end
 end

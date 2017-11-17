@@ -5,8 +5,8 @@ import '../../styles/checkout.css';
 
 export default class CheckoutPage extends Component {
     componentDidMount() {
-        this.props.fetchAllMembershipPlans();
-        const { membershipPlanId, guests } = this.props.match.params;
+        this.props.fetchAllMembershipPlans().then(() => console.log("here"));
+        const { membershipPlanId, quantity, guests } = this.props.match.params;
         this.setState({
             membershipPlanId: membershipPlanId,
             guests: guests
