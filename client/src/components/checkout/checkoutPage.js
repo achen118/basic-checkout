@@ -5,75 +5,73 @@ import '../../styles/checkout.css';
 
 export default class CheckoutPage extends Component {
     componentDidMount() {
-        this.props.fetchAllMembershipPlans().then(() => console.log("here"));
         const { membershipPlanId, quantity, guests } = this.props.match.params;
-        this.setState({
-            membershipPlanId: membershipPlanId,
-            guests: guests
-        }); 
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const { membershipPlans } = nextProps;
-        const { membershipPlanId } = this.state;
-        if (membershipPlans.allIds.length > 0 &&
-            membershipPlans.allIds !== this.props.membershipPlans.allIds) {
-            this.name = membershipPlans.byId[membershipPlanId].name;
-            this.amount = membershipPlans.byId[membershipPlanId].amount / 100;
-            this.guestCost = 0;
+        this.props.fetchMembershipPlan(membershipPlanId)
+        .then(() => {
             this.setState({
-                amount: (this.amount + (this.state.guests * this.guestCost)).toFixed(2)
-            });
-        }
+                membershipPlanId: membershipPlanId,
+                guests: guests,
+                quantity: quantity
+            }); 
+        });
     }
-
+    
     constructor(props) {
         super(props);
         this.state = {
             membershipPlanId: "",
             guests: "",
-            amount: "",
+            quantity: "",
             stripeToken: ""
         };
         this.addSubscription = this.addSubscription.bind(this);
         this.receiveStripeToken = this.receiveStripeToken.bind(this);
     }
-
+    
     addSubscription() {
         this.props.addSubscription({
             membership_plan_id: this.state.membershipPlanId,
             guests: this.state.guests,
-            amount: this.state.amount,
+            quantity: this.state.quantity,
             stripe_token: this.state.stripeToken
         });
     }
-
+    
     receiveStripeToken(token) {
         this.setState({
             stripeToken: token
         }, () => this.addSubscription());
     }
-
+    
     render() {
-        return (
-            <div className="checkout-container">
+        const { membershipPlan } = this.props;
+        let checkoutInfo;
+        if (membershipPlan) {
+            const guestCost = membershipPlan.name === "Basic" ? membershipPlan.amount / 100 : 0;
+            const totalCost = this.state.guests * guestCost + membershipPlan.amount / 100;
+            checkoutInfo = <div className="checkout-container">
                 <h2 className="checkout-page-title">
-                    { `${this.name} Subscription` }
+                    { `${membershipPlan.name} Subscription` }
                 </h2>
                 <ul>
                     <li>
-                        { `Monthly Cost: $${this.amount}` }
+                        { `Monthly Cost: $${membershipPlan.amount / 100}` }
                     </li>
                     <li>
-                        { `${this.state.guests} guests x $${this.guestCost}` }
+                        {`${this.state.guests} guests x $${guestCost}` }
                     </li>
                     <li>
-                        { `Total Cost: $${this.state.amount}` }
+                        { `Total Cost: $${totalCost}` }
                     </li>
                 </ul>
                 <Elements>
                     <CheckoutForm receiveStripeToken={ this.receiveStripeToken }  />
                 </Elements>
+            </div>;
+        }
+        return (
+            <div>
+                { checkoutInfo }
             </div>
         );
     }

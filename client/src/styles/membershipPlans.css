@@ -59,7 +59,7 @@
     text-align: center;
     padding: 5px;
     letter-spacing: 2px;
-    width: 10%;
+    width: 20%;
 }
 
 .subscribe-button {
@@ -75,4 +75,8 @@
     bottom: 6%;
     right: 22%;
     color: #F65600;
+}
+
+.guest-select {
+    font-size: 20px;
 }

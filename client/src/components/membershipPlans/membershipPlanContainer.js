@@ -5,7 +5,7 @@ import { receiveErrors, clearErrors } from '../../actions/errorsActions';
 
 const mapStateToProps = state => {
     return {
-        errors: state.errors
+        
     };
 };
 

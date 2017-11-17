@@ -12,10 +12,11 @@ class Api::SubscriptionsController < ApplicationController
             @subscription = Stripe::Subscription.create(
                 customer: current_user.customer_id,
                 trial_period_days: 15,
+                source: params[:subscription][:stripe_token],
                 items: [
                     {
-                        plan: params[:subscription][:membership_plan_id],
-                        quantity: params[:subscription][:membership_plan_quantity]
+                        plan: params[:subscription][:id],
+                        quantity: params[:subscription][:quantity]
                     }
                 ],
                 metadata: {
@@ -28,11 +29,5 @@ class Api::SubscriptionsController < ApplicationController
 
     def index
         render json: Stripe::Subscription.list(customer: current_user.customer_id).data
-    end
-
-    private
-
-    def subscription_params
-        params.require(:subscription).permit(:membership_plan_id, :membership_plan_quantity, :guests)
     end
 end

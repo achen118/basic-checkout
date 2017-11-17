@@ -15,7 +15,7 @@ const SubscriptionsReducer = (state = defaultState, action) => {
             nextState = merge({}, defaultState);
             action.subscriptions.forEach(subscription => {
                 if (!nextState.allMembershipPlanIds.includes(subscription.membership_plan_id)) {
-                    nextState.allMembershipPlanIds.push(subscription.membership_plan_id);
+                    nextState.allMembershipPlanIds.unshift(subscription.membership_plan_id);
                 }
                 nextState.byMembershipPlanId[subscription.membership_plan_id] = subscription;
             });
@@ -23,7 +23,7 @@ const SubscriptionsReducer = (state = defaultState, action) => {
         case RECEIVE_SUBSCRIPTION:
             nextState = merge({}, state);
             if (!nextState.allMembershipPlanIds.includes(action.subscription.membership_plan_id)) {
-                nextState.allMembershipPlanIds.push(action.subscription.membership_plan_id);
+                nextState.allMembershipPlanIds.unshift(action.subscription.membership_plan_id);
             }
             nextState.byMembershipPlanId[action.subscription.membership_plan_id] = action.subscription;
             return nextState;

@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import CheckoutPage from './checkoutPage';
 import { addSubscription } from '../../actions/subscriptionsActions';
-import { fetchAllMembershipPlans } from '../../actions/membershipPlansActions';
+import { fetchMembershipPlan } from '../../actions/membershipPlansActions';
 
 const mapStateToProps = state => {
     return {
-        membershipPlans: state.membershipPlans,
+        membershipPlan: state.membershipPlan,
         errors: state.errors
     };
 };
@@ -13,7 +13,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addSubscription: subscription => dispatch(addSubscription(subscription)),
-        fetchAllMembershipPlans: () => dispatch(fetchAllMembershipPlans())
+        fetchMembershipPlan: membershipPlanId => dispatch(fetchMembershipPlan(membershipPlanId))
     };
 };
 

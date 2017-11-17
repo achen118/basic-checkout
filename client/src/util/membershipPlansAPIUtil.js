@@ -8,3 +8,12 @@ export const fetchAllMembershipPlans = () => {
         }
     });
 };
+
+export const fetchMembershipPlan = membershipPlanId => {
+    return axios({
+        url: `/api/membership_plans/${membershipPlanId}`,
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+        }
+    });
+};

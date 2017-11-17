@@ -10,14 +10,13 @@ export default class MembershipPlans extends Component {
         };
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleSubscribe = this.handleSubscribe.bind(this);
-        this.renderErrors = this.renderErrors.bind(this);
     }
 
     handleUpdate(event) {
         if (this.props.membershipPlan.name === "Basic") {
             this.setState({
                 guests: event.target.value,
-                quantity: event.target.value + 1
+                quantity: parseInt(event.target.value) + 1
             });
         } else {
             this.setState({
@@ -33,24 +32,17 @@ export default class MembershipPlans extends Component {
             this.props.receiveErrors([{ [membershipPlan.id]: "5 guests maximum" }]);
         } else {
             this.props.clearErrors();
-            this.props.history.push(`/checkout/${membershipPlan.id}/${this.state.quantity}/${this.state.guests}`);
-        }
-    }
-
-    renderErrors(event) {
-        const errors = [];
-        this.props.errors.forEach(error => {
-            const membershipPlanId = parseInt(Object.keys(error)[0]);
-            if (membershipPlanId === this.props.membershipPlan.id) {
-                errors.push(error[membershipPlanId]);
+            let guests = 0;
+            let quantity = this.state.quantity || 0;
+            if (this.state.guests) {
+                guests = parseInt(this.state.guests);
             }
-        });
-        return errors;
+            this.props.history.push(`/checkout/${membershipPlan.id}/${quantity}/${guests}`);
+        }
     }
 
     render() {
         const { membershipPlan, subscription } = this.props;
-        console.log(membershipPlan);
         let subscriptionCost;
         let subscriptionGuests;
         if (subscription) {
@@ -77,9 +69,32 @@ export default class MembershipPlans extends Component {
                     <section 
                         className={ subscription ? "unsubscribed hidden" : "unsubscribed" }>
                         <p>Number of Guests:</p>
-                        <input
-                            value={ this.state.guests }
-                            onChange={ this.handleUpdate } />
+                        {
+                            membershipPlan.name === "Basic" ?
+                            <input
+                                value={ this.state.guests }
+                                onChange={ this.handleUpdate } /> :
+                            <select className="guest-select" onChange={ this.handleUpdate }>
+                                <option value="0">
+                                    0
+                                </option>
+                                <option value="1">
+                                    1
+                                </option>
+                                <option value="2">
+                                    2
+                                </option>
+                                <option value="3">
+                                    3
+                                </option>
+                                <option value="4">
+                                    4
+                                </option>
+                                <option value="5">
+                                    5
+                                </option>
+                            </select>
+                        }
                         <button
                             className="subscribe-button"
                             onClick={ this.handleSubscribe }>
@@ -92,17 +107,6 @@ export default class MembershipPlans extends Component {
                         <p>{`$${subscriptionCost} / month`}</p>
                         <p>{`${subscriptionGuests} guests`}</p>
                     </section>
-                    <ul>
-                        { 
-                            this.renderErrors().map((error, idx) => (
-                                <li
-                                    className="subscription-error"
-                                    key={ idx }>
-                                    { error }
-                                </li>
-                            )) 
-                        }
-                    </ul>
                 </ul>
         );
     }
