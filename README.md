@@ -1,3 +1,10 @@
+# Instructions
+
+### bundle install
+### cd client
+### npm install
+### rake start
+
 # Coding Challenge
 
 You are running a social club, where members subscribe online to gain access to
