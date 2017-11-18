@@ -50,6 +50,7 @@ export default class CheckoutPage extends Component {
             checkoutForm = 
                 <Elements>
                     <CheckoutForm
+                        receiveErrors={ this.props.receiveErrors }
                         receiveStripeToken={ this.receiveStripeToken } />
                 </Elements>;
         }
