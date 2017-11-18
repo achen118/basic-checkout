@@ -1,9 +1,18 @@
-# Instructions
+# Instructions for localhost
 
-### bundle install
-### cd client
-### npm install
-### rake start
+### - bundle install
+### - cd client
+### - npm install
+### - rake start
+
+# Technologies Used
+
+- Rails API
+- JWT Authentication with Knock ruby gem
+- Stripe ruby gem
+- PostgreSQL database
+- React + Redux
+- React Stripe Elements
 
 # Coding Challenge
 
