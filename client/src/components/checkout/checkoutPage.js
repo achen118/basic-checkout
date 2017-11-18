@@ -19,7 +19,7 @@ export default class CheckoutPage extends Component {
     }
     
     addSubscription() {
-        const { membershipPlanId, quantity, guests } = this.props.match.params;
+        const { membershipPlanId, quantity } = this.props.match.params;
         this.props.addSubscription({
             membership_plan_id: membershipPlanId,
             quantity: quantity,
@@ -64,12 +64,12 @@ export default class CheckoutPage extends Component {
                     <h2 className="checkout-page-title">
                         { `${membershipPlan.name} Subscription` }
                     </h2>
-                    <ul>
+                    <ul className="checkout-info">
                         <li>
                             { `Monthly Cost: $${membershipPlan.amount / 100}` }
                         </li>
                         <li>
-                            {`${guests} guests x $${guestCost}` }
+                            {`${guests} guests x $${guestCost} = $${guests * guestCost}` }
                         </li>
                         <li>
                             { `Total Cost: $${totalCost}` }

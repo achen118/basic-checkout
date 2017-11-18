@@ -21,9 +21,18 @@ class CheckoutForm extends Component {
 
     render() {
         return (
-            <form onSubmit={ this.handleSubmit }>
-                <CardElement style={{ base: { fontSize: '18px' } }} />
-                <button>Confirm subscription</button>
+            <form 
+                className="cc-form"
+                onSubmit={ this.handleSubmit }>
+                <CardElement 
+                    className="card"
+                    style={{ base: { 
+                        fontSize: '22px',
+                        color: '#19334A'
+                    } }} />
+                <button className="confirm-sub-button">
+                    Confirm Subscription
+                </button>
             </form>
         );
     }
