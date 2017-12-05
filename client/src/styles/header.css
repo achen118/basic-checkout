@@ -1,3 +1,8 @@
+.header-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .app-header {
     color: #F65600;
     background-color: #FEFEFE;
@@ -27,5 +32,28 @@
 
 .app-header a {
     text-decoration: none;
+    color: #F65600;
+}
+
+.trial-banner {
+    margin-top: 90px;
+    background-color: #F65600;
+    padding: 30px;
+    color: #FEFEFE;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.upgrade-button {
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.upgrade-text {
+    font-weight: 700;
+    padding: 10px;
     color: #F65600;
 }

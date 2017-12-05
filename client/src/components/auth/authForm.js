@@ -11,6 +11,9 @@ export default class AuthForm extends Component {
         if (nextProps.location.pathname !== this.props.location.pathname) {
             this.props.clearErrors();
         }
+        if (nextProps.location.pathname === '/signup') {
+            window.mixpanel.track("Visit");
+        }
     }
 
     constructor(props) {
