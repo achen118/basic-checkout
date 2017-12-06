@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/header.css';
+import TrialBannerContainer from '../trial/trialBannerContainer';
 
 export default class Header extends Component {
     constructor(props) {
@@ -22,12 +23,15 @@ export default class Header extends Component {
             </i>;
         }
         return (
-            <header className="app-header">
-                <Link to='/subscriptions'>
-                    <h1 className="title">SF Social Club</h1>
-                </Link>
-                { logoutButton }
-            </header>
+            <div className="header-container">
+                <header className="app-header">
+                    <Link to='/subscriptions'>
+                        <h1 className="title">SF Social Club</h1>
+                    </Link>
+                    { logoutButton }
+                </header>
+                <TrialBannerContainer history={ this.props.history } />
+            </div>
         );
     }
 }

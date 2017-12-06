@@ -13,6 +13,7 @@ class CheckoutForm extends Component {
             .then(payload => {
                 if (payload.token) {
                     this.props.receiveStripeToken(payload.token.id);
+                    window.mixpanel.track("Checked Out");
                 } else {
                     this.props.receiveErrors(["Invalid credit card information"]);
                 }

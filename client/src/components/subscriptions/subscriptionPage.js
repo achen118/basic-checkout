@@ -6,6 +6,7 @@ export default class SubscriptionPage extends Component {
     componentDidMount() {
         this.props.fetchAllMembershipPlans();
         this.props.fetchSubscription();
+        window.mixpanel.track("Visit");
     }
 
     render() {
