@@ -1,6 +1,9 @@
 # Instructions for localhost
 
 ### - bundle install
+### - rake db:create
+### - rake db:migrate
+### - rake db:seed
 ### - cd client
 ### - npm install
 ### - rake start
